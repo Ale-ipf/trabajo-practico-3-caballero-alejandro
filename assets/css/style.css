@@ -1,0 +1,58 @@
+body {
+  background-color: #fffdf6;
+}
+ 
+.navbar-simpsons {
+  background-color: var(--azul-simpson);
+  border-bottom: 6px solid var(--amarillo-simpson);
+}
+ 
+.navbar-simpsons .navbar-brand {
+  color: var(--amarillo-simpson);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+ 
+.tarjeta-personaje {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+ 
+.tarjeta-personaje:hover {
+  transform: translateY(-4px);
+  border-color: var(--amarillo-simpson);
+}
+ 
+.tarjeta-personaje .card-img-top {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-color: #eee;
+}
+ 
+.tarjeta-personaje .btn-warning {
+  background-color: var(--amarillo-simpson);
+  border-color: var(--amarillo-simpson);
+  color: #222;
+  font-weight: 600;
+}
+ 
+.modal-header-simpsons {
+  background-color: var(--azul-simpson);
+  color: white;
+}
+ 
+.modal-header-simpsons .btn-close {
+  filter: invert(1);
+}
+ 
+#modal-body-contenido img {
+  border-radius: 10px;
+  width: 100%;
+  object-fit: cover;
+}
+ 
+#mensaje-busqueda {
+  font-weight: 500;
+}
