@@ -112,3 +112,51 @@ function crearTarjetaPersonaje(personaje) {
  
   return columna;
 }
+
+function limpiarResultados() {
+  contenedorTarjetas.innerHTML = "";
+  mensajeBusqueda.classList.add("d-none");
+  mensajeBusqueda.textContent = "";
+}
+function mostrarMensaje(texto, tipo = "info") {
+  mensajeBusqueda.className = `text-center mt-3 alert alert-${tipo}`;
+  mensajeBusqueda.textContent = texto;
+  mensajeBusqueda.classList.remove("d-none");
+}
+ 
+function mostrarSpinner(mostrar) {
+  spinnerCarga.classList.toggle("d-none", !mostrar);
+}
+
+function filtrarPersonajes(termino) {
+  const texto = termino.trim().toLowerCase();
+ 
+  const resultados = personajes.filter((personaje) =>
+    personaje.name.toLowerCase().includes(texto)
+  );
+ 
+  renderizarTarjetas(resultados);
+}
+
+async function mostrarModalDetalle(id) {
+  // Estado de carga dentro del modal
+  modalBodyContenido.innerHTML = `
+    <div class="text-center py-4">
+      <div class="spinner-border text-warning" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  `;
+  modalDetalle.show();
+ 
+  try {
+    const personaje = await obtenerDetallePersonaje(id);
+    modalBodyContenido.innerHTML = generarContenidoModal(personaje);
+  } catch (error) {
+    modalBodyContenido.innerHTML = `
+      <div class="alert alert-danger mb-0">
+        No se pudo obtener el detalle del personaje. (${error.message})
+      </div>
+    `;
+  }
+}
