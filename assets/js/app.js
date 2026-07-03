@@ -160,3 +160,62 @@ async function mostrarModalDetalle(id) {
     `;
   }
 }
+
+function generarContenidoModal(personaje) {
+  const urlImagen = `${CDN_BASE_URL}${personaje.portrait_path}`;
+  const frase =
+    personaje.phrases && personaje.phrases.length > 0
+      ? personaje.phrases[0]
+      : "Este personaje no tiene frases registradas.";
+ 
+  const edad = personaje.age !== null && personaje.age !== undefined
+    ? personaje.age
+    : "Desconocida";
+ 
+  const fechaNacimiento = personaje.birthdate || "Desconocida";
+ 
+  return `
+    <div class="row g-3 align-items-start">
+      <div class="col-4">
+        <img src="${urlImagen}" alt="${personaje.name}" />
+      </div>
+      <div class="col-8">
+        <h4>${personaje.name}</h4>
+        <p class="mb-1"><strong>Edad:</strong> ${edad}</p>
+        <p class="mb-1"><strong>Fecha de nacimiento:</strong> ${fechaNacimiento}</p>
+        <p class="mb-1"><strong>Género:</strong> ${personaje.gender}</p>
+        <p class="mb-1"><strong>Ocupación:</strong> ${personaje.occupation || "Desconocida"}</p>
+        <p class="mb-2"><strong>Estado:</strong> ${personaje.status}</p>
+        <p class="fst-italic mb-0">"${frase}"</p>
+      </div>
+    </div>
+  `;
+}
+
+formBuscador.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  const texto = inputBuscador.value;
+ 
+  // Validación: el campo no debe estar vacío
+  if (texto.trim() === "") {
+    mostrarMensaje("Escribí un nombre para buscar.", "warning");
+    return;
+  }
+ 
+  filtrarPersonajes(texto);
+});
+
+btnLimpiarBusqueda.addEventListener("click", () => {
+  inputBuscador.value = "";
+  renderizarTarjetas(personajes);
+});
+
+contenedorTarjetas.addEventListener("click", (evento) => {
+  const boton = evento.target.closest(".btn-ver-detalle");
+  if (!boton) return;
+ 
+  const id = boton.dataset.id;
+  mostrarModalDetalle(id);
+});
+
+document.addEventListener("DOMContentLoaded", obtenerListadoPersonajes);
